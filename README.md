@@ -22,7 +22,25 @@ class Solution:
         """
         l = len(nums)
         for i in range(0, l-1):
+            dif = target - nums[i]
             for j in range(i+1, l):
-                if nums[i]+nums[j] == target:
+                if nums[j] == dif:
                     return [i, j]
+# 时间复杂度高，吸取教训
+# https://wiki.python.org/moin/TimeComplexity
+```
+Answer2:
+···python
+class Solution:
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        dic = {}
+        for index, num in enumerate(nums):
+            if num in dic:
+                return [dic[num], index]
+            dic[target - num] = index
 ```
