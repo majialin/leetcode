@@ -26,11 +26,12 @@ class Solution:
             for j in range(i+1, l):
                 if nums[j] == dif:
                     return [i, j]
-# 时间复杂度高，吸取教训
+# 时间复杂度高，吸取教训。
+# dict 比 list 查找快（因为hash索引）
 # https://wiki.python.org/moin/TimeComplexity
 ```
 Answer2:
-···python
+```python
 class Solution:
     def twoSum(self, nums, target):
         """
@@ -43,4 +44,5 @@ class Solution:
             if num in dic:
                 return [dic[num], index]
             dic[target - num] = index
+# 鉴自他人
 ```
