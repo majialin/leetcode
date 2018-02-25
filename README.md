@@ -155,3 +155,49 @@ class Solution:
         else:
             return (nums[x-1] + nums[x])/2 * 1.0
 ```
+### 5. Longest Palindromic Substring
+Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
+
+Example:
+```
+Input: "babad"
+Output: "bab"
+Note: "aba" is also a valid answer.
+ ```
+Example:
+```
+Input: "cbbd"
+Output: "bb"
+```
+Answer:
+```python
+class Solution:
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        palindromic_list = []
+        for i in range(len(s)):
+            l, r = i-1, i
+            palindromic_str = ''
+            while l>=0 and r<len(s):  # this cycle result longest palindrome with even length
+                if s[l] == s[r]:
+                    palindromic_str = s[l:r+1]
+                else:
+                    break
+                l, r = l-1, r+1
+            palindromic_list.append(palindromic_str)
+            
+            l = r = i
+            palindromic_str = ''
+            while l>=0 and r<len(s):  # this cycle result longest palindrome with odd length
+                if s[l] == s[r]:
+                    palindromic_str = s[l:r+1]
+                else:
+                    break
+                l, r = l-1, r+1
+            palindromic_list.append(palindromic_str)
+            
+        return max(palindromic_list, key=len, default='')
+```
