@@ -1,7 +1,7 @@
 # leetcode
 
 ### 1. Two Sum
-Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.  
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
 Example:
@@ -216,6 +216,7 @@ sumRange(0, 2) -> 8
 Note:
 1. The array is only modifiable by the update function.
 2. You may assume the number of calls to update and sumRange function is distributed evenly.
+
 Answer:
 ```python
 class NumArray:
@@ -251,3 +252,42 @@ class NumArray:
 # obj.update(i,val)
 # param_2 = obj.sumRange(i,j)
 ```
+### 29. Divide Two Integers
+Divide two integers without using multiplication, division and mod operator.
+
+If it is overflow, return MAX_INT.
+
+Answer:
+```python
+class Solution:
+    def divide(self, dividend, divisor):
+        """
+        :type dividend: int
+        :type divisor: int
+        :rtype: int
+        """
+        d = abs(dividend)
+        a = c = abs(divisor)
+        r = 0
+        i = 0
+        while a <= d:
+            a <<= 1
+            i += 1
+        while i>0:
+            i -= 1
+            a = c<<i
+            if d>=a:
+                d -= a
+                r = r + (1<<i) # https://docs.python.org/3/reference/expressions.html#operator-precedence
+
+        if (dividend<0 and divisor>0) or (dividend>0 and divisor<0):
+            return -r
+        if r > 2147483647:
+            return 2147483647    
+        return r
+```
+Notice:  
+Python3 doesn't have max_int problem, `if r > 2147483647:` is just for leetcode test cases.
+
+Achievement:  
+**Your runtime beats 100.00 % of python3 submissions.** Runtime: 60 ms
