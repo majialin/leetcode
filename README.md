@@ -201,6 +201,64 @@ class Solution:
             
         return max(palindromic_list, key=len, default='')
 ```
+
+### 6. ZigZag Conversion
+
+The string `"PAYPALISHIRING"` is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+```
+P   A   H   N
+A P L S I I G
+Y   I   R
+```
+And then read line by line: `"PAHNAPLSIIGYIR"`
+Write the code that will take a string and make this conversion given a number of rows:
+```
+string convert(string text, int nRows);
+```
+`convert("PAYPALISHIRING", 3)` should return `"PAHNAPLSIIGYIR"`.
+
+Anwser:
+```python
+class Solution:
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        if numRows == 1:
+            return s
+        martrix = []
+        
+        x, y = divmod(len(s), 2*numRows-2)
+        if y == 0:
+            numCols = x*2
+        else:
+            numCols = x*2 + (1 if y<= numRows else 2)    # how many columns
+        
+        for n in range(numCols):                      # n means column number
+            col = []
+            if n%2 == 0:                                         # when comes to even column
+                l = n//2 * numRows + n//2 * (numRows-2)        # start index of s in column
+                r = l + numRows
+                for i in range(l,r):
+                    col.append(s[i] if i<len(s) else '')
+            else:
+                l = (n//2 + 1) * numRows + n//2 * (numRows-2)
+                r = l + numRows - 2
+                for i in range(l,r):
+                    col.append(s[i] if i<len(s) else '')
+                col.insert(0,'')
+                col.append('')
+                col.reverse()
+            martrix.append(col)
+
+        # martrix[col1,col2,col3...]
+        martrix = [[row[i] for row in martrix] for i in range(numRows)]  # transpose
+        letter_list = [letter for row in martrix for letter in row]
+        return ''.join(letter_list)
+```
+
 ### 307. Range Sum Query - Mutable
 Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
 
