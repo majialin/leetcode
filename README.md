@@ -259,6 +259,51 @@ class Solution:
         return ''.join(letter_list)
 ```
 
+### 7. Reverse Integer
+Given a 32-bit signed integer, reverse digits of an integer.
+
+Example 1:
+```
+Input: 123
+Output:  321
+```
+Example 2:
+```
+Input: -123
+Output: -321
+```
+Example 3:
+```
+Input: 120
+Output: 21
+```
+Note:
+Assume we are dealing with an environment which could only hold integers within the 32-bit signed integer range. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+
+Answer:
+```python
+class Solution:
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        positive = True if x>=0 else False
+        r = int(str(abs(x))[::-1])
+        r = r if positive else -r
+        
+        # only for leetcode test
+        if r > 2147483647 or r < -2147483648:
+            return 0
+        
+        return r
+```
+Notice:  
+Another answer is numeric solution like x%10. (a basic problem which i encoutered in college)
+
+Achievement:  
+**Your runtime beats 100.00 % of python3 submissions.** Runtime: 60 ms
+
 ### 307. Range Sum Query - Mutable
 Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
 
