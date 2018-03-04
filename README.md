@@ -375,6 +375,94 @@ class Solution:
 Achievement:  
 **Your runtime beats 100.00 % of python3 submissions.** Runtime: 312 ms
 
+### 10. Regular Expression Matching
+
+Implement regular expression matching with support for '.' and '*'.
+```
+'.' Matches any single character.
+'*' Matches zero or more of the preceding element.
+
+The matching should cover the entire input string (not partial).
+
+The function prototype should be:
+bool isMatch(const char *s, const char *p)
+
+Some examples:
+isMatch("aa","a") → false
+isMatch("aa","aa") → true
+isMatch("aaa","aa") → false
+isMatch("aa", "a*") → true
+isMatch("aa", ".*") → true
+isMatch("ab", ".*") → true
+isMatch("aab", "c*a*b") → true
+```
+Answer:
+```python
+# recursive solution
+class Solution:
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        if p=='':
+            if s=='':
+                return True
+            else:
+                return False
+        
+        try:
+            if p[1]=='*':
+                num1 = '*' # num1 means the the number of first charactor in p
+            else:
+                num1 = '1'
+        except IndexError:
+            num1 = '1'
+        
+        if s=='':
+            if num1=='*':
+                return self.isMatch(s,p[2:])
+            return False
+            
+        if num1 == '*':
+            if p[0]=='.' or p[0]==s[0]:
+                return self.isMatch(s[1:], p) or self.isMatch(s, p[2:])
+            else:
+                return self.isMatch(s, p[2:])
+        
+        if p[0]=='.' or p[0]==s[0]:
+            return self.isMatch(s[1:], p[1:])
+        return False
+```
+```python
+# dynamic programming solution
+class Solution:
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        temp = {}
+        # define m(i,j) as " if s[i:] match p[j:] "
+        def m(i,j):
+            if (i,j) in temp:
+                return temp[i,j]
+            else:
+                if j>len(p)-1:
+                    ans = i>len(s)-1
+                else:
+                    first_match = i<=len(s)-1 and p[j] in s[i]+'.'
+                    if j<len(p)-1 and p[j+1]=='*':
+                        ans =  (first_match and m(i+1,j)) or m(i,j+2)
+                    else:
+                        ans = first_match and m(i+1,j+1)
+                temp[i,j] = ans
+                return ans
+        return m(0,0)
+```
+
 ### 307. Range Sum Query - Mutable
 Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
 
