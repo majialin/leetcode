@@ -608,6 +608,39 @@ class Solution:
         return result
 ```
 
+### 17. Letter Combinations of a Phone Number
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+
+A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+Example:
+```
+Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+Note:
+```
+Anwser:
+```python
+class Solution:
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        if digits=="":
+            return []
+        phone_map = {"1":"","2":"abc","3":"def","4":"ghi","5":"jkl",
+                     "6":"mno","7":"pqrs","8":"tuv","9":"wxyz","0":""}
+        result = [l for l in phone_map[digits[0]]]
+        for d in digits[1:]:
+            letters = phone_map[d]
+            result = [i+j for i in result for j in letters]
+        return result
+```
+Achievement:  
+**Your runtime beats 100.00 % of python3 submissions.** Runtime: 32 ms
+
+Although the above answer is in lexicographical order, your answer could be in any order you want.
+
 ### 307. Range Sum Query - Mutable
 Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
 
