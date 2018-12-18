@@ -463,6 +463,52 @@ class Solution:
         return m(0,0)
 ```
 
+### 15. 3Sum
+Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+Note:
+
+The solution set must not contain duplicate triplets.
+
+Example:
+```
+Given array nums = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+```
+Answer:
+```python
+# Change to a 2Sum problem
+class Solution:
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        nums.sort()
+        result = []
+        for i,num1 in enumerate(nums): # 2Sum solution with dict-map
+            if i>0 and num1==nums[i-1]:
+                continue
+            sumof2 = 0-num1
+            d = {}
+            nums2 = nums[i+1:]
+            j_temp = None
+            for j,num2 in enumerate(nums2):
+                if num2 in d:
+                    if d[num2]==j_temp:
+                        continue
+                    result.append([num1,nums2[d[num2]],num2])
+                    j_temp = d[num2]
+                else:
+                    d[sumof2-num2] = j
+        return result
+```
+
 ### 307. Range Sum Query - Mutable
 Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
 
