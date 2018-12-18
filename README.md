@@ -508,6 +508,36 @@ class Solution:
                     d[sumof2-num2] = j
         return result
 ```
+```python
+class Solution:
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        nums.sort()
+        result = []
+        for i in range(len(nums)-2):
+            if i>0 and nums[i]==nums[i-1]:
+                continue
+            j=i+1
+            k=len(nums)-1
+            while j<k: # 2Sum solution with two pointers
+                if j>i+1 and nums[j]==nums[j-1]:
+                    j=j+1
+                    continue
+                sum = nums[i]+nums[j]+nums[k]
+                if sum == 0:
+                    result.append([nums[i],nums[j],nums[k]])
+                    j=j+1
+                elif sum < 0:
+                    j=j+1
+                else:
+                    k=k-1
+        return result
+                    
+            
+```
 
 ### 307. Range Sum Query - Mutable
 Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
