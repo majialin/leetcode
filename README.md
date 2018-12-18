@@ -539,6 +539,75 @@ class Solution:
             
 ```
 
+### 16. 3Sum Closest
+Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+
+Example:
+```
+
+Given array nums = [-1, 2, 1, -4], and target = 1.
+
+The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+```
+
+Anwser:
+```python
+# solution with 2Sum closest
+class Solution:
+    def threeSumClosest(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        nums.sort()
+        result = nums[0]+nums[1]+nums[2]
+        for i in range(len(nums)-2):
+            sum = nums[i] + self.twoSumClosest(nums[i+1:], target-nums[i])
+            if abs(sum-target) < abs(result-target):
+                result = sum
+        return result
+    
+    def twoSumClosest(self, nums, target):
+        l,r = 0,len(nums)-1
+        result = nums[l]+nums[r]
+        while l<r :
+            sum = nums[l] + nums[r]
+            d = abs(target - sum)
+            if abs(target-result) > d:
+                result = sum
+            if sum <= target:
+                l = l+1
+            else:
+                r = r-1
+        return result
+```
+```python
+# solution with 2 pointers
+class Solution:
+    def threeSumClosest(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        nums.sort()
+        result = nums[0]+nums[1]+nums[2]
+        for i in range(len(nums)-2):
+            j,k = i+1,len(nums)-1
+            while j<k:
+                sum = nums[i]+nums[j]+nums[k]
+                if abs(sum-target) < abs(result-target):
+                    result = sum
+                if sum < target:
+                    j=j+1
+                elif sum > target:
+                    k=k-1
+                else:
+                    return result
+        return result
+```
+
 ### 307. Range Sum Query - Mutable
 Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
 
