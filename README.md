@@ -26,7 +26,6 @@ class Solution:
             for j in range(i+1, l):
                 if nums[j] == dif:
                     return [i, j]
-# 时间复杂度高，吸取教训。
 # dict 比 list 查找快（因为hash索引）
 # https://wiki.python.org/moin/TimeComplexity
 ```
@@ -44,7 +43,6 @@ class Solution:
             if num in dic:
                 return [dic[num], index]
             dic[target - num] = index
-# 鉴自他人
 ```
 
 ### 2. Add Two Numbers
@@ -616,8 +614,11 @@ Example:
 ```
 Input: "23"
 Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
-Note:
 ```
+Note:
+
+Although the above answer is in lexicographical order, your answer could be in any order you want.
+
 Anwser:
 ```python
 class Solution:
@@ -639,7 +640,50 @@ class Solution:
 Achievement:  
 **Your runtime beats 100.00 % of python3 submissions.** Runtime: 32 ms
 
-Although the above answer is in lexicographical order, your answer could be in any order you want.
+### 19. Remove Nth Node From End of List
+
+Given a linked list, remove the n-th node from the end of list and return its head.
+```
+Example:
+
+Given linked list: 1->2->3->4->5, and n = 2.
+
+After removing the second node from the end, the linked list becomes 1->2->3->5.
+```
+Note:
+
+Given n will always be valid.
+
+Follow up:
+
+Could you do this in one pass?
+
+Solution:
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        fast = slow = head
+        for i in range(n):
+            fast = fast.next
+        if not fast:
+            return head.next
+        while fast.next:
+            fast = fast.next
+            slow = slow.next
+        slow.next = slow.next.next
+        return head
+```
 
 ### 307. Range Sum Query - Mutable
 Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
